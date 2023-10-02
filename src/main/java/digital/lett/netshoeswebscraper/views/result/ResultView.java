@@ -1,6 +1,8 @@
 package digital.lett.netshoeswebscraper.views.result;
 
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.accordion.Accordion;
+import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -15,17 +17,18 @@ import com.vaadin.flow.router.Route;
 public class ResultView extends Composite<VerticalLayout> {
 
     public ResultView() {
-        Tabs tabs = new Tabs();
+        Accordion accordion = new Accordion();
         getContent().setHeightFull();
         getContent().setWidthFull();
-        tabs.setWidthFull();
-        setTabsSampleData(tabs);
-        getContent().add(tabs);
+        accordion.setWidthFull();
+        setAccordionPanels(accordion);
+        getContent().add(accordion);
     }
 
-    private void setTabsSampleData(Tabs tabs) {
-        tabs.add(new Tab("Dashboard"));
-        tabs.add(new Tab("Payment"));
-        tabs.add(new Tab("Shipping"));
+    private void setAccordionPanels(Accordion accordion) {
+        accordion.add(new AccordionPanel("Name"));
+        accordion.add(new AccordionPanel("Description"));
+        accordion.add(new AccordionPanel("Price"));
+        accordion.add(new AccordionPanel("Pictures"));
     }
 }
