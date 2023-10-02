@@ -1,0 +1,9 @@
+@import url('./views/home-view.css');
+@import url('./views/result-view.css');
+    [theme~="dark"] {
+      --lumo-primary-color-50pct: rgba(1, 180, 240, 0.5);
+      --lumo-primary-color-10pct: rgba(1, 180, 240, 0.1);
+      --lumo-primary-color: rgb(1, 180, 240);
+      --lumo-base-color: rgb(2, 38, 60);
+
+    }
