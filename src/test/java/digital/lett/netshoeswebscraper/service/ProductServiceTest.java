@@ -48,7 +48,6 @@ class ProductServiceTest {
     void testProduct() throws NoProductException, InvalidURLException, ConnectionException {
         String productURL = "https://www.netshoes.com.br/tenis-nike-structure-25-masculino-preto-JD8-4935-006";
 
-        assertAll(() -> ProductService.parseUrl(productURL));
-
+        assertAll(() -> ProductService.scrapeProduct(productURL));
     }
 }

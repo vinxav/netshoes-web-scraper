@@ -33,7 +33,7 @@ public class ProductService {
 
         try {
             name = page.select("h1[data-productName]").first().text();
-            description = page.getElementsByClass("description").first().text();
+            description = page.select("p[itemprop = description]").first().text();
             price = page.select("div.default-price strong").first().text();
             imageUrl = page.getElementsByClass("zoom").first().attributes().get("src");
         } catch (NullPointerException e) {
@@ -57,10 +57,7 @@ public class ProductService {
 
         Document page = null;
         try {
-            page = httpClient.execute(getRequest, response -> {
-                System.out.println(response.getCode());
-                return Jsoup.parse(EntityUtils.toString(response.getEntity()));
-            });
+            page = httpClient.execute(getRequest, response -> Jsoup.parse(EntityUtils.toString(response.getEntity())));
         } catch (IOException e) {
             throw new ConnectionException(e.getMessage());
         }
