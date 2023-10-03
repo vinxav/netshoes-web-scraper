@@ -1,12 +1,11 @@
 package digital.lett.netshoeswebscraper.service;
 
-import digital.lett.netshoeswebscraper.entity.Product;
 import digital.lett.netshoeswebscraper.exception.ConnectionException;
 import digital.lett.netshoeswebscraper.exception.InvalidURLException;
 import digital.lett.netshoeswebscraper.exception.NoProductException;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,12 +15,6 @@ class ProductServiceTest {
     @Test
     void testValidURLVerification() {
         String product = "https://www.netshoes.com.br/tenis-nike-zoom-court-next-masculino-branco-2IC-1866-014";
-        URL result = null;
-        try {
-            result = ProductService.parseUrl(product);
-        } catch (InvalidURLException e) {
-            throw new RuntimeException(e);
-        }
 
         assertAll(() -> ProductService.parseUrl(product));
     }
@@ -45,7 +38,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void testProduct() throws NoProductException, InvalidURLException, ConnectionException {
+    void testProduct() {
         String productURL = "https://www.netshoes.com.br/tenis-nike-structure-25-masculino-preto-JD8-4935-006";
 
         assertAll(() -> ProductService.scrapeProduct(productURL));

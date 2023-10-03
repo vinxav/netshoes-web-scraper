@@ -8,6 +8,8 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
@@ -23,7 +25,7 @@ import digital.lett.netshoeswebscraper.exception.ConnectionException;
 import digital.lett.netshoeswebscraper.exception.InvalidURLException;
 import digital.lett.netshoeswebscraper.exception.NoProductException;
 import digital.lett.netshoeswebscraper.service.ProductService;
-@PageTitle("Home")
+@PageTitle("Netshoes Web Scraper")
 @Route(value = "")
 @Uses(Icon.class)
 public class HomeView extends Composite<VerticalLayout> {
@@ -34,76 +36,64 @@ public class HomeView extends Composite<VerticalLayout> {
     private final Details picture = new Details();
 
     public HomeView() {
-        HorizontalLayout layoutRow = new HorizontalLayout();
-
-        H1 title = new H1();
-        title.setText("Netshoes Web Scraper");
-
-        Paragraph subtitle = new Paragraph();
-        subtitle.setText("Paste the Netshoes' product URL below to get its title, description, price and picture.");
+        HorizontalLayout headerLayout = new HorizontalLayout();
+        H1 title = new H1("Netshoes Web Scraper");
+        Paragraph subtitle = new Paragraph("Cole o link da página de um produto da Netshoes para extrair o seu título, valor, descrição e imagem.");
         subtitle.getStyle().set("font-size", "var(--lumo-font-size-xl)");
+        headerLayout.setAlignSelf(FlexComponent.Alignment.CENTER, title, subtitle);
 
-        VerticalLayout productFields = new VerticalLayout();
-        TextField url = new TextField();
-        url.setLabel("URL");
-        Button buttonScrape = new Button("Scrape",
+        VerticalLayout mainLayout = new VerticalLayout();
+        TextField url = new TextField("URL");
+        Button buttonScrape = new Button("Extrair",
                 buttonClickEvent -> {
                     try {
-                        setProductDetails(ProductService.scrapeProduct(url.getValue()), name, price, description, picture);
+                        setProductDetails(ProductService.scrapeProduct(url.getValue()));
                     } catch (InvalidURLException | ConnectionException | NoProductException e) {
-                        throw new RuntimeException(e);
+                        showErrorNotification();
                     }
                 });
+        buttonScrape.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, url, buttonScrape);
+        url.setWidthFull();
         Hr hr = new Hr();
 
-        getContent().addClassName(Gap.XLARGE);
-        getContent().addClassName(Padding.XLARGE);
-        getContent().setWidthFull();
-        getContent().setHeightFull();
-        layoutRow.setWidthFull();
-        layoutRow.addClassName(Gap.MEDIUM);
-        layoutRow.setAlignItems(Alignment.CENTER);
-        layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
-        layoutRow.setAlignSelf(FlexComponent.Alignment.CENTER, title);
-        getContent().setAlignSelf(FlexComponent.Alignment.CENTER, subtitle);
-        productFields.setWidthFull();
-        productFields.addClassName(Gap.LARGE);
-        productFields.setPadding(false);
-        url.setWidthFull();
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, url);
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, buttonScrape);
-        buttonScrape.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, name);
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, price);
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, description);
-        productFields.setAlignSelf(FlexComponent.Alignment.CENTER, picture);
-        getContent().add(layoutRow);
-        layoutRow.add(title);
-        getContent().add(subtitle);
-        productFields.add(url);
-        productFields.add(buttonScrape);
-        productFields.add(hr);
-        getContent().add(productFields);
+        VerticalLayout productDataLayout = new VerticalLayout();
+        name.setSummaryText("Título");
+        price.setSummaryText("Valor");
+        description.setSummaryText("Descrição");
+        picture.setSummaryText("Imagem");
 
-        productFields.add(name);
-        productFields.add(price);
-        productFields.add(description);
-        productFields.add(picture);
-        name.setSummaryText("Name");
-        price.setSummaryText("Price");
-        description.setSummaryText("Description");
-        picture.setSummaryText("Picture");
+        headerLayout.add(title);
+        mainLayout.add(subtitle, url, buttonScrape, hr);
+        productDataLayout.add(name, price, description, picture);
         toggleDetailsVisibility(false, name, price, description, picture);
+        getContent().add(headerLayout, mainLayout, productDataLayout);
+        setLayoutPreferences(headerLayout, mainLayout, productDataLayout);
     }
 
-    private void toggleDetailsVisibility(boolean value, Details... details) {
-        for (Details i : details) {
-            i.setVisible(value);
-            i.setOpened(value);
-        }
+    private void showErrorNotification() {
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+
+        Div text = new Div(new Text("A URL não possui um produto válido."));
+
+        Button closeButton = new Button(new Icon("lumo", "cross"));
+        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        closeButton.getElement().setAttribute("aria-label", "Close");
+        closeButton.addClickListener(event -> {
+            notification.close();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+        layout.setAlignItems(Alignment.CENTER);
+
+        notification.setDuration(5000);
+        notification.setPosition(Notification.Position.TOP_END);
+        notification.add(layout);
+        notification.open();
     }
 
-    private void setProductDetails(Product product, Details name, Details price, Details description, Details picture) {
+    private void setProductDetails(Product product) {
         Span nameSpan = new Span(new Text(product.name()));
         Span priceSpan = new Span(new Text(String.format("R$ %s", product.price().toString())));
         Span descriptionSpan = new Span(new Text(product.description()));
@@ -116,4 +106,32 @@ public class HomeView extends Composite<VerticalLayout> {
 
         toggleDetailsVisibility(true, name, price, description, picture);
     }
+
+    private void setLayoutPreferences(HorizontalLayout headerLayout, VerticalLayout mainLayout, VerticalLayout productDataLayout) {
+        getContent().addClassName(Gap.XLARGE);
+        getContent().addClassName(Padding.XLARGE);
+        getContent().setWidthFull();
+        getContent().setHeightFull();
+        headerLayout.setWidthFull();
+        headerLayout.addClassName(Gap.MEDIUM);
+        headerLayout.setAlignItems(Alignment.CENTER);
+        headerLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setWidthFull();
+        mainLayout.addClassName(Gap.LARGE);
+        mainLayout.setPadding(false);
+        productDataLayout.setPadding(false);
+        productDataLayout.setWidthFull();
+        productDataLayout.setAlignSelf(Alignment.STRETCH, name, price, description, picture);
+    }
+
+    private void toggleDetailsVisibility(boolean value, Details... details) {
+        for (Details i : details) {
+            i.setVisible(value);
+            i.setOpened(value);
+        }
+    }
+
+
+
+
 }

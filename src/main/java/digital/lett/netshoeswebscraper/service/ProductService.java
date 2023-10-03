@@ -12,7 +12,6 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 
 public class ProductService {
 
@@ -31,10 +31,10 @@ public class ProductService {
         String imageUrl;
 
         try {
-            name = page.select("h1[data-productName]").first().text();
-            description = page.select("p[itemprop = description]").first().text();
-            price = page.select("div.default-price strong").first().text();
-            imageUrl = page.getElementsByClass("zoom").first().attributes().get("src");
+            name = Objects.requireNonNull(page.select("h1[data-productName]").first()).text();
+            description = Objects.requireNonNull(page.select("p[itemprop = description]").first()).text();
+            price = Objects.requireNonNull(page.select("div.default-price strong").first()).text();
+            imageUrl = Objects.requireNonNull(page.getElementsByClass("zoom").first()).attributes().get("src");
         } catch (NullPointerException e) {
             throw new NoProductException("The provided page is not a valid product");
         }
@@ -54,7 +54,7 @@ public class ProductService {
 
         ClassicHttpRequest getRequest = ClassicRequestBuilder.get(String.format("https://www.netshoes.com.br%s", url.getPath())).build();
 
-        Document page = null;
+        Document page;
         try {
             page = httpClient.execute(getRequest, response -> Jsoup.parse(EntityUtils.toString(response.getEntity())));
         } catch (IOException e) {
