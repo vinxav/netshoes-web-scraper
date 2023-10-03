@@ -21,7 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-@Service
 public class ProductService {
 
     public static Product scrapeProduct(String url) throws InvalidURLException, ConnectionException, NoProductException {
