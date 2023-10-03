@@ -66,7 +66,7 @@ public class HomeView extends Composite<VerticalLayout> {
         headerLayout.add(title);
         mainLayout.add(subtitle, url, buttonScrape, hr);
         productDataLayout.add(name, price, description, picture);
-        toggleDetailsVisibility(false, name, price, description, picture);
+        changeProductDetailsVisibility(false);
         getContent().add(headerLayout, mainLayout, productDataLayout);
         setLayoutPreferences(headerLayout, mainLayout, productDataLayout);
     }
@@ -99,12 +99,19 @@ public class HomeView extends Composite<VerticalLayout> {
         Span descriptionSpan = new Span(new Text(product.description()));
         Span pictureSpan = new Span(new Image(product.imageUrl(), product.name()));
 
-        name.addContent(nameSpan);
-        price.addContent(priceSpan);
-        description.addContent(descriptionSpan);
-        picture.addContent(pictureSpan);
+        name.setContent(nameSpan);
+        price.setContent(priceSpan);
+        description.setContent(descriptionSpan);
+        picture.setContent(pictureSpan);
 
-        toggleDetailsVisibility(true, name, price, description, picture);
+        changeProductDetailsVisibility(true);
+    }
+
+    private void changeProductDetailsVisibility(boolean value) {
+        name.setVisible(value);
+        price.setVisible(value);
+        description.setVisible(value);
+        picture.setVisible(value);
     }
 
     private void setLayoutPreferences(HorizontalLayout headerLayout, VerticalLayout mainLayout, VerticalLayout productDataLayout) {
@@ -123,15 +130,4 @@ public class HomeView extends Composite<VerticalLayout> {
         productDataLayout.setWidthFull();
         productDataLayout.setAlignSelf(Alignment.STRETCH, name, price, description, picture);
     }
-
-    private void toggleDetailsVisibility(boolean value, Details... details) {
-        for (Details i : details) {
-            i.setVisible(value);
-            i.setOpened(value);
-        }
-    }
-
-
-
-
 }
