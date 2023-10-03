@@ -42,7 +42,7 @@ public class ProductService {
         return new Product(
                 name,
                 description,
-                new BigDecimal(price.replaceAll("[^\\d.,]", "").replace(",", ".")),
+                new BigDecimal(price.replaceAll("[^\\d,]", "").replace(",", ".")),
                 imageUrl
         );
     }

@@ -55,7 +55,6 @@ public class HomeView extends Composite<VerticalLayout> {
         buttonScrape.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, url, buttonScrape);
         url.setWidthFull();
-        Hr hr = new Hr();
 
         VerticalLayout productDataLayout = new VerticalLayout();
         name.setSummaryText("Título");
@@ -64,33 +63,11 @@ public class HomeView extends Composite<VerticalLayout> {
         picture.setSummaryText("Imagem");
 
         headerLayout.add(title);
-        mainLayout.add(subtitle, url, buttonScrape, hr);
+        mainLayout.add(subtitle, url, buttonScrape, new Hr());
         productDataLayout.add(name, price, description, picture);
         changeProductDetailsVisibility(false);
-        getContent().add(headerLayout, mainLayout, productDataLayout);
         setLayoutPreferences(headerLayout, mainLayout, productDataLayout);
-    }
-
-    private void showErrorNotification() {
-        Notification notification = new Notification();
-        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
-
-        Div text = new Div(new Text("A URL não possui um produto válido."));
-
-        Button closeButton = new Button(new Icon("lumo", "cross"));
-        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
-        closeButton.getElement().setAttribute("aria-label", "Close");
-        closeButton.addClickListener(event -> {
-            notification.close();
-        });
-
-        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
-        layout.setAlignItems(Alignment.CENTER);
-
-        notification.setDuration(5000);
-        notification.setPosition(Notification.Position.TOP_END);
-        notification.add(layout);
-        notification.open();
+        getContent().add(headerLayout, mainLayout, productDataLayout);
     }
 
     private void setProductDetails(Product product) {
@@ -107,11 +84,37 @@ public class HomeView extends Composite<VerticalLayout> {
         changeProductDetailsVisibility(true);
     }
 
+    private void showErrorNotification() {
+        Notification notification = new Notification();
+        notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+        notification.setDuration(5000);
+        notification.setPosition(Notification.Position.TOP_END);
+
+        Div text = new Div(new Text("A URL não possui um produto válido."));
+
+        Button closeButton = new Button(new Icon("lumo", "cross"));
+        closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
+        closeButton.getElement().setAttribute("aria-label", "Close");
+        closeButton.addClickListener(event -> {
+            notification.close();
+        });
+
+        HorizontalLayout layout = new HorizontalLayout(text, closeButton);
+        layout.setAlignItems(Alignment.CENTER);
+
+        notification.add(layout);
+        notification.open();
+    }
+
     private void changeProductDetailsVisibility(boolean value) {
         name.setVisible(value);
+        name.setOpened(value);
         price.setVisible(value);
+        price.setOpened(value);
         description.setVisible(value);
+        description.setOpened(value);
         picture.setVisible(value);
+        picture.setOpened(value);
     }
 
     private void setLayoutPreferences(HorizontalLayout headerLayout, VerticalLayout mainLayout, VerticalLayout productDataLayout) {
