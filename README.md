@@ -24,7 +24,7 @@ Após baixar o arquivo `.jar`, basta executá-lo com o comando `java -jar netsho
 
 ### Executando a partir do código fonte
 
-Para executar o Netshoes Web Scraper a partir do código fonte, é preciso clonar o repositório para sua máquina local usando o [Git](https://git-scm.com). Para isso, execute o comando `git clone https://github.com/vinxav/netshoeswebscraper.git` no terminal.
+Para executar o Netshoes Web Scraper a partir do código fonte, é preciso clonar o repositório para sua máquina local usando o [Git](https://git-scm.com). Para isso, execute o comando `git clone https://github.com/vinxav/netshoes-web-scraper.git` no terminal.
 
 Após clonar o repositório e entrar na raiz do repositório, basta executar o comando `./mvnw` (no Linux ou macOS) ou `mvnw` (no Windows). O Maven irá baixar as dependências do projeto e executar a aplicação.
 
