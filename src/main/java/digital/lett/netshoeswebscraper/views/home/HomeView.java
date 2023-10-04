@@ -40,14 +40,12 @@ public class HomeView extends Composite<VerticalLayout> {
     public HomeView(ProductService service) {
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1("Netshoes Web Scraper");
-        //<theme-editor-local-classname>
         title.addClassName("home-view-h1-1");
         Paragraph subtitle = new Paragraph("Cole o link da página de um produto da Netshoes para extrair o seu título, valor, descrição e imagem.");
         subtitle.getStyle().set("font-size", "var(--lumo-font-size-xl)");
         headerLayout.setAlignSelf(FlexComponent.Alignment.CENTER, title, subtitle);
 
         VerticalLayout mainLayout = new VerticalLayout();
-        //<theme-editor-local-classname>
         mainLayout.addClassName("home-view-vertical-layout-1");
         TextField url = new TextField("URL");
         Button buttonScrape = new Button("Extrair");
@@ -83,15 +81,10 @@ public class HomeView extends Composite<VerticalLayout> {
     }
 
     private void setProductDetails(Product product) {
-        Span nameSpan = new Span(new Text(product.name()));
-        Span priceSpan = new Span(new Text(String.format("R$ %s", product.price().toString())));
-        Span descriptionSpan = new Span(new Text(product.description()));
-        Span pictureSpan = new Span(new Image(product.imageUrl(), product.name()));
-
-        name.setContent(nameSpan);
-        price.setContent(priceSpan);
-        description.setContent(descriptionSpan);
-        picture.setContent(pictureSpan);
+        name.setContent(new Span(new Text(product.name())));
+        price.setContent(new Span(new Text(String.format("R$ %s", product.price().toString()))));
+        description.setContent(new Span(new Text(product.description())));
+        picture.setContent(new Span(new Image(product.imageUrl(), product.name())));
 
         changeProductDetailsVisibility(true);
     }

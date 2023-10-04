@@ -6,7 +6,7 @@
     <groupId>digital.lett.netshoeswebscraper</groupId>
     <artifactId>netshoeswebscraper</artifactId>
     <name>netshoeswebscraper</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <properties>

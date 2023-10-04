@@ -1,45 +1,39 @@
 # Netshoes Web Scraper
 
-This project can be used as a starting point to create your own Vaadin application with Spring Boot.
-It contains all the necessary configuration and some placeholder files to get you started.
+O Netshoes Web Scraper é uma aplicação Java que permite a extração do título, preço, descrição e imagem de produtos da Netshoes.
 
-## Running the application
+## Como funciona?
 
-The project is a standard Maven project. To run it from the command line,
-type `mvnw` (Windows), or `./mvnw` (Mac & Linux), then open
-http://localhost:8080 in your browser.
+Para extrair as informações de um produto, o Netshoes Web Scraper realiza as seguintes etapas:
 
-You can also import the project to your IDE of choice as you would with any
-Maven project. Read more on [how to import Vaadin projects to different IDEs](https://vaadin.com/docs/latest/guide/step-by-step/importing) (Eclipse, IntelliJ IDEA, NetBeans, and VS Code).
+1. Faz o download da página do produto, usando a biblioteca [Apache HttpComponents](https://hc.apache.org/index.html);
+2. Extrai as informações do produto (título, preço, descrição e imagem) no HTML retornado a partir de seletores CSS, usando a biblioteca [JSoup](https://jsoup.org);
+3. Retorna as informações extraídas.
 
-## Deploying to Production
+A interação com o usuário é feita através de uma interface web, desenvolvida em Java, que usa a plataforma [Spring Boot](https://spring.io/projects/spring-boot) e foi feita com o framework [Vaadin](https://www.vaadin.com).
 
-To create a production build, call `mvnw clean package -Pproduction` (Windows),
-or `./mvnw clean package -Pproduction` (Mac & Linux).
-This will build a JAR file with all the dependencies and front-end resources,
-ready to be deployed. The file can be found in the `target` folder after the build completes.
+## Como executar?
 
-Once the JAR file is built, you can run it using
-`java -jar target/netshoeswebscraper-1.0-SNAPSHOT.jar`
+Para executar a aplicação, é preciso ter o [Java 21](https://www.oracle.com/java/technologies/downloads/) instalado na sua máquina.
 
-## Project structure
+### Executando a release mais recente (recomendado)
 
-- `MainLayout.java` in `src/main/java` contains the navigation setup (i.e., the
-  side/top bar and the main menu). This setup uses
-  [App Layout](https://vaadin.com/docs/components/app-layout).
-- `views` package in `src/main/java` contains the server-side Java views of your application.
-- `views` folder in `frontend/` contains the client-side JavaScript views of your application.
-- `themes` folder in `frontend/` contains the custom CSS styles.
+A forma mais simples de obter o Netshoes Web Scraper é baixando a release mais recente disponível [aqui](https://github.com). 
 
-## Useful links
+Após baixar o arquivo `.jar`, basta executá-lo com o comando `java -jar netshoeswebscraper-1.0.jar`.
 
-- Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
-- Follow the tutorial at [vaadin.com/docs/latest/tutorial/overview](https://vaadin.com/docs/latest/tutorial/overview).
-- Create new projects at [start.vaadin.com](https://start.vaadin.com/).
-- Search UI components and their usage examples at [vaadin.com/docs/latest/components](https://vaadin.com/docs/latest/components).
-- View use case applications that demonstrate Vaadin capabilities at [vaadin.com/examples-and-demos](https://vaadin.com/examples-and-demos).
-- Build any UI without custom CSS by discovering Vaadin's set of [CSS utility classes](https://vaadin.com/docs/styling/lumo/utility-classes). 
-- Find a collection of solutions to common use cases at [cookbook.vaadin.com](https://cookbook.vaadin.com/).
-- Find add-ons at [vaadin.com/directory](https://vaadin.com/directory).
-- Ask questions on [Stack Overflow](https://stackoverflow.com/questions/tagged/vaadin) or join our [Discord channel](https://discord.gg/MYFq5RTbBn).
-- Report issues, create pull requests in [GitHub](https://github.com/vaadin).
+### Executando a partir do código fonte
+
+Para executar o Netshoes Web Scraper a partir do código fonte, é preciso clonar o repositório para sua máquina local usando o [Git](https://git-scm.com). Para isso, execute o comando `git clone https://github.com/vinxav/netshoeswebscraper.git` no terminal.
+
+Após clonar o repositório e entrar na raiz do repositório, basta executar o comando `./mvnw` (no Linux ou macOS) ou `mvnw` (no Windows). O Maven irá baixar as dependências do projeto e executar a aplicação.
+
+## Como usar?
+
+Depois de executar o Netshoes Web Scraper, acesse o endereço `http://localhost:8080/` no navegador. A página inicial da aplicação será exibida.
+
+Para extrair as informações de um produto, basta informar a URL do produto no campo de texto e clicar no botão "Extrair". O título, preço, imagem e descrição do produto serão exibidos na página.
+
+## Exemplos
+
+*Nota: os exemplos abaixo foram obtidos em 04/10/2023. Os resultados podem ser diferentes dependendo da data em que o Netshoes Web Scraper for executado.*
