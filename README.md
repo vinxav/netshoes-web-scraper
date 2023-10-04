@@ -1,4 +1,4 @@
-![image](https://github.com/vinxav/netshoes-web-scraper/assets/40648717/df48b3fe-4cee-4796-8d5a-1a7abf222240)# Netshoes Web Scraper
+# Netshoes Web Scraper
 
 O Netshoes Web Scraper é uma aplicação Java que permite a extração do título, preço, descrição e imagem de produtos da Netshoes.
 
@@ -41,13 +41,13 @@ Para extrair as informações de um produto, basta informar a URL do produto no 
 *Nota: os exemplos abaixo foram obtidos em 04/10/2023. Os resultados podem ser diferentes dependendo da data em que o Netshoes Web Scraper for executado.*
 
 ### Produto: Tênis Nike Air Max
-(Link)[https://www.netshoes.com.br/tenis-nike-air-max-masculino-preto+branco-HZM-5168-026]
+[Link](https://www.netshoes.com.br/tenis-nike-air-max-masculino-preto+branco-HZM-5168-026)
 ![image](https://github.com/vinxav/netshoes-web-scraper/assets/40648717/b17dc5d2-5afe-4641-826d-b78312c72627)
 
 ### Produto: Camiseta Fila Basic Sports
-(Link)[https://www.netshoes.com.br/camiseta-fila-basic-sports-masculina-vermelho-2FT-9544-016]
+[Link](https://www.netshoes.com.br/camiseta-fila-basic-sports-masculina-vermelho-2FT-9544-016)
 ![image](https://github.com/vinxav/netshoes-web-scraper/assets/40648717/8c700d37-e11b-4e77-9f8c-ff9a14130c63)
 
 ### Produto: Tênis Olympikus 146G Ultraleve
-(Link)[https://www.netshoes.com.br/tenis-olympikus-146g-ultraleve-feminino-preto-2I2-5824-006]
+[Link](https://www.netshoes.com.br/tenis-olympikus-146g-ultraleve-feminino-preto-2I2-5824-006)
 ![image](https://github.com/vinxav/netshoes-web-scraper/assets/40648717/311780da-bb94-429a-ba8d-7fc784d44b98)
