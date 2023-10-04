@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.html.*;
@@ -28,6 +29,7 @@ import digital.lett.netshoeswebscraper.service.ProductService;
 @PageTitle("Netshoes Web Scraper")
 @Route(value = "")
 @Uses(Icon.class)
+@StyleSheet("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700;800;900&display=swap")
 public class HomeView extends Composite<VerticalLayout> {
 
     private final Details name = new Details();
@@ -38,21 +40,31 @@ public class HomeView extends Composite<VerticalLayout> {
     public HomeView() {
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1("Netshoes Web Scraper");
+        //<theme-editor-local-classname>
+        title.addClassName("home-view-h1-1");
         Paragraph subtitle = new Paragraph("Cole o link da página de um produto da Netshoes para extrair o seu título, valor, descrição e imagem.");
         subtitle.getStyle().set("font-size", "var(--lumo-font-size-xl)");
         headerLayout.setAlignSelf(FlexComponent.Alignment.CENTER, title, subtitle);
 
         VerticalLayout mainLayout = new VerticalLayout();
+        //<theme-editor-local-classname>
+        mainLayout.addClassName("home-view-vertical-layout-1");
         TextField url = new TextField("URL");
-        Button buttonScrape = new Button("Extrair",
-                buttonClickEvent -> {
+        Button buttonScrape = new Button("Extrair");
+        buttonScrape.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        buttonScrape.setDisableOnClick(true);
+        buttonScrape.addClickListener(event -> {
                     try {
                         setProductDetails(ProductService.scrapeProduct(url.getValue()));
-                    } catch (InvalidURLException | ConnectionException | NoProductException e) {
-                        showErrorNotification();
+                    } catch (InvalidURLException e) {
+                        showErrorNotification("A URL fornecida é inválida");
+                    } catch (ConnectionException e) {
+                        showErrorNotification("Erro na conexão com a Netshoes");
+                    } catch (NoProductException e) {
+                        showErrorNotification("A URL não contém um produto disponível");
                     }
+                    buttonScrape.setEnabled(true);
                 });
-        buttonScrape.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, url, buttonScrape);
         url.setWidthFull();
 
@@ -84,13 +96,13 @@ public class HomeView extends Composite<VerticalLayout> {
         changeProductDetailsVisibility(true);
     }
 
-    private void showErrorNotification() {
+    private void showErrorNotification(String message) {
         Notification notification = new Notification();
         notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         notification.setDuration(5000);
         notification.setPosition(Notification.Position.TOP_END);
 
-        Div text = new Div(new Text("A URL não possui um produto válido."));
+        Div text = new Div(new Text(message));
 
         Button closeButton = new Button(new Icon("lumo", "cross"));
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
@@ -133,4 +145,6 @@ public class HomeView extends Composite<VerticalLayout> {
         productDataLayout.setWidthFull();
         productDataLayout.setAlignSelf(Alignment.STRETCH, name, price, description, picture);
     }
+
+
 }

@@ -22,7 +22,6 @@ import java.net.URL;
 import java.util.Objects;
 
 public class ProductService {
-
     public static Product scrapeProduct(String url) throws InvalidURLException, ConnectionException, NoProductException {
         Document page = connectToUrl(url);
         String name;
