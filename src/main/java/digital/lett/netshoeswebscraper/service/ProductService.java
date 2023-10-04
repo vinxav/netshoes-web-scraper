@@ -12,6 +12,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,8 +22,9 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Objects;
 
+@Service
 public class ProductService {
-    public static Product scrapeProduct(String url) throws InvalidURLException, ConnectionException, NoProductException {
+    public Product scrapeProduct(String url) throws InvalidURLException, ConnectionException, NoProductException {
         Document page = connectToUrl(url);
         String name;
         String description;

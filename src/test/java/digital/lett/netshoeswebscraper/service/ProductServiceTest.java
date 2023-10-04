@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceTest {
 
+    private final ProductService service = new ProductService();
+
     @Test
     void testValidURLVerification() {
         String product = "https://www.netshoes.com.br/tenis-nike-zoom-court-next-masculino-branco-2IC-1866-014";
@@ -34,13 +36,13 @@ class ProductServiceTest {
     @Test
     void testNoProduct() {
         String product = "https://www.netshoes.com.br/lst/mi-outlet?mi=hm_ger_mntop_outlet_211122&psn=Menu_Top";
-        assertThrows(NoProductException.class, () -> ProductService.scrapeProduct(product));
+        assertThrows(NoProductException.class, () -> service.scrapeProduct(product));
     }
 
     @Test
     void testProduct() {
         String productURL = "https://www.netshoes.com.br/tenis-nike-structure-25-masculino-preto-JD8-4935-006";
 
-        assertAll(() -> ProductService.scrapeProduct(productURL));
+        assertAll(() -> service.scrapeProduct(productURL));
     }
 }
