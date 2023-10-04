@@ -37,7 +37,7 @@ public class HomeView extends Composite<VerticalLayout> {
     private final Details description = new Details();
     private final Details picture = new Details();
 
-    public HomeView() {
+    public HomeView(ProductService service) {
         HorizontalLayout headerLayout = new HorizontalLayout();
         H1 title = new H1("Netshoes Web Scraper");
         //<theme-editor-local-classname>
@@ -55,13 +55,13 @@ public class HomeView extends Composite<VerticalLayout> {
         buttonScrape.setDisableOnClick(true);
         buttonScrape.addClickListener(event -> {
                     try {
-                        setProductDetails(ProductService.scrapeProduct(url.getValue()));
+                        setProductDetails(service.scrapeProduct(url.getValue()));
                     } catch (InvalidURLException e) {
-                        showErrorNotification("A URL fornecida é inválida");
+                        showErrorNotification("A URL fornecida é inválida.");
                     } catch (ConnectionException e) {
-                        showErrorNotification("Erro na conexão com a Netshoes");
+                        showErrorNotification("Erro na conexão com a Netshoes.");
                     } catch (NoProductException e) {
-                        showErrorNotification("A URL não contém um produto disponível");
+                        showErrorNotification("A URL não contém um produto disponível.");
                     }
                     buttonScrape.setEnabled(true);
                 });
@@ -107,9 +107,7 @@ public class HomeView extends Composite<VerticalLayout> {
         Button closeButton = new Button(new Icon("lumo", "cross"));
         closeButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE);
         closeButton.getElement().setAttribute("aria-label", "Close");
-        closeButton.addClickListener(event -> {
-            notification.close();
-        });
+        closeButton.addClickListener(event -> notification.close());
 
         HorizontalLayout layout = new HorizontalLayout(text, closeButton);
         layout.setAlignItems(Alignment.CENTER);
