@@ -18,7 +18,7 @@ Para executar a aplicação, é preciso ter o [Java 21](https://www.oracle.com/j
 
 ### Executando a release mais recente (recomendado)
 
-A forma mais simples de obter o Netshoes Web Scraper é baixando a release mais recente disponível [aqui](https://github.com). 
+A forma mais simples de obter o Netshoes Web Scraper é baixando a release mais recente disponível [aqui](https://github.com/vinxav/netshoes-web-scraper/releases/tag/v1.0). 
 
 Após baixar o arquivo `.jar`, basta executá-lo com o comando `java -jar netshoeswebscraper-1.0.jar`.
 
